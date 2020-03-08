@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/mainMenuFragment">
+    <fragment
+        android:id="@+id/mainMenuFragment"
+        android:name="com.example.applicationcrpytage.mainMenu.MainMenuFragment"
+        android:label="fragment_main_menu"
+        tools:layout="@layout/fragment_main_menu" >
+        <action
+            android:id="@+id/action_mainMenuFragment_to_methodeCryptageB1Fragment"
+            app:destination="@id/methodeCryptageB1Fragment" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_methodeCryptageAFragment"
+            app:destination="@id/methodeCryptageAFragment" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_methodeCryptageB2Fragment"
+            app:destination="@id/methodeCryptageB2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/methodeCryptageAFragment"
+        android:name="com.example.applicationcrpytage.methodeCryptageA.MethodeCryptageAFragment"
+        android:label="fragment_methode_cryptage"
+        tools:layout="@layout/fragment_methode_cryptage_a" />
+    <fragment
+        android:id="@+id/methodeCryptageB1Fragment"
+        android:name="com.example.applicationcrpytage.methodeCryptageB1.MethodeCryptageB1Fragment"
+        android:label="fragment_methode_cryptage_b1"
+        tools:layout="@layout/fragment_methode_cryptage_b1"/>
+    <fragment
+        android:id="@+id/methodeCryptageB2Fragment"
+        android:name="com.example.applicationcrpytage.methodeCryptageB2.MethodeCryptageB2Fragment"
+        android:label="fragment_methode_cryptage_b2"
+        tools:layout="@layout/fragment_methode_cryptage_b2" />
+</navigation>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.applicationcrpytage.mainMenu.MainMenuViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".mainMenu.MainMenuFragment">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choisissez votre méthode de crpytage"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonMethodeA"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonMethodeA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()-> viewModel.onClickBoutonA()}"
+            android:text="Méthode A"
+            app:layout_constraintBottom_toTopOf="@+id/buttonMethodeB1"
+            app:layout_constraintEnd_toEndOf="@+id/textView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <Button
+            android:id="@+id/buttonMethodeB1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()-> viewModel.onClickBoutonB1()}"
+            android:text="Méthode B1"
+            app:layout_constraintBottom_toTopOf="@+id/buttonMethodeB2"
+            app:layout_constraintEnd_toEndOf="@+id/buttonMethodeA"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/buttonMethodeA"
+            app:layout_constraintTop_toBottomOf="@+id/buttonMethodeA" />
+
+        <Button
+            android:id="@+id/buttonMethodeB2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()-> viewModel.onClickBoutonB2()}"
+            android:text="Méthode B2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/buttonMethodeB1"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/buttonMethodeB1"
+            app:layout_constraintTop_toBottomOf="@+id/buttonMethodeB1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

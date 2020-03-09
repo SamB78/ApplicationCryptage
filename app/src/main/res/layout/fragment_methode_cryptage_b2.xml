@@ -113,7 +113,8 @@
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="@+id/textView2"
             app:layout_constraintStart_toStartOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/buttonToEncryptData" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonToEncryptData"
+            android:text="@{viewModel.resultEncryption}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

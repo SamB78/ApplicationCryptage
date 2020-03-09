@@ -1,11 +1,9 @@
 package com.example.applicationcrpytage.methodeCryptageB2
 
-import android.graphics.PointF.length
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.applicationcrpytage.Utils.calculDeterminant
+import com.example.applicationcrpytage.Utils.CalculDeterminant
 import timber.log.Timber
 
 class MethodeCryptageB2ViewModel : ViewModel() {
@@ -36,8 +34,9 @@ class MethodeCryptageB2ViewModel : ViewModel() {
     }
 
     fun onClickButtonCryptage() {
-        if (calculDeterminant(matrice) > 0) {
+        var stringResult = ""
 
+        if (CalculDeterminant(matrice) > 0) {
             var matriceA =
                 arrayOf(intArrayOf(0), intArrayOf(0))// Ajouter modulo pour nombres impaires
             Timber.i("La clé est compatible!")
@@ -58,19 +57,25 @@ class MethodeCryptageB2ViewModel : ViewModel() {
 
                 val C = arrayOf(intArrayOf(0), intArrayOf(0))
 
-                for(l in 0 until nbLignesMatrice){
-                    for(j in 0 until nbColonnesMatriceA){
-                        for(k in 0 until nbLignesMatriceA){
+                for (l in 0 until nbLignesMatrice) {
+                    for (j in 0 until nbColonnesMatriceA) {
+                        for (k in 0 until nbLignesMatriceA) {
                             Timber.i("k = $k ")
-                            C[l][j] += matrice[l][k]* matriceA[k][j]
+                            C[l][j] += matrice[l][k] * matriceA[k][j]
 
                             Timber.i("C[$l][$j] = ${C[l][j]}, matrice[$l][$k] =${matrice[l][k]},matriceA[$k][$j]= ${matriceA[k][j]}")
                         }
                     }
                 }
                 Timber.i("C = ${C[0][0]}${C[1][0]}")
-
+                val val1 = C[0][0]
+                val val2 = C[1][0]
+                Timber.i("C = ${listeCaracteres[val1 % 53]}${listeCaracteres[val2 % 53]}")
+                stringResult += listeCaracteres[val1 % 53] + "" + listeCaracteres[val2 % 53]
             }
+            Timber.e("resultat cryptage = $stringResult")
+
+            _resultEncryption.value = stringResult
 
 
         } else {

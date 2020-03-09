@@ -2,27 +2,27 @@ package com.example.applicationcrpytage.Utils
 
 import timber.log.Timber
 
-fun CalculDeterminant(matrice: Array<IntArray>): Int {
+fun calculDeterminant(matrice: Array<IntArray>): Int {
     if (matrice.count() == 1) {
-        Timber.i("Valeur de matrice[0][0] = ${matrice[0][0]}")
+        Timber.i("Valeur de matriceCryptage[0][0] = ${matrice[0][0]}")
         return matrice[0][0]
     } else if (matrice.count() == 2) {
         val result = matrice[0][0] * matrice[1][1] - matrice[0][1] * matrice[1][0]
-        Timber.i("Valeur de matrice = $result")
+        Timber.i("Valeur de matriceCryptage = $result")
         return result
     } else if (matrice.count() == 3) {
         val result: Int
-        result = (matrice[0][0] * CalculDeterminant(
+        result = (matrice[0][0] * calculDeterminant(
             matriceCut(
                 matrice,
                 0
             )
-        )) - (matrice[0][1] * CalculDeterminant(
+        )) - (matrice[0][1] * calculDeterminant(
             matriceCut(
                 matrice,
                 1
             )
-        )) + (matrice[0][1] * CalculDeterminant(matriceCut(matrice, 2)))
+        )) + (matrice[0][1] * calculDeterminant(matriceCut(matrice, 2)))
         return result
     }
     return 0
@@ -61,15 +61,24 @@ fun matriceCut(matrice: Array<IntArray>, i: Int): Array<IntArray> {
     return matriceResultat
 }
 
-//fun Comatrice(matrice: Array<IntArray>): Array<IntArray> {
+fun checkSizeText(text: String, sizeMatrice: Int): String{
+    var textResult = text
+
+    while(textResult.length % sizeMatrice !=0){
+        textResult +="\u0000"
+    }
+    return textResult
+}
+
+//fun Comatrice(matriceCryptage: Array<IntArray>): Array<IntArray> {
 //
-//    var comatrice = [0] * matrice.size
+//    var comatrice = [0] * matriceCryptage.size
 //    var i = 0
 //    var k = 0
-//    while (i < matrice.size) {
-//        comatrice[k] = [0] * matrice.size
+//    while (i < matriceCryptage.size) {
+//        comatrice[k] = [0] * matriceCryptage.size
 //        val l = 0
-//        while (l < matrice.size) {
+//        while (l < matriceCryptage.size) {
 //            TODO("A FAIRE")
 //        }
 //    }
@@ -78,10 +87,10 @@ fun matriceCut(matrice: Array<IntArray>, i: Int): Array<IntArray> {
 //fun ExtractionLigneColonneMatrice(
 //    ligne: Int,
 //    colonne: Int,
-//    matrice: Array<IntArray>
+//    matriceCryptage: Array<IntArray>
 //): Array<IntArray>? {
 //
-//    val tailleMatrice = matrice.size
+//    val tailleMatrice = matriceCryptage.size
 //    var matriceResultat: Array<IntArray>
 //
 //    return null

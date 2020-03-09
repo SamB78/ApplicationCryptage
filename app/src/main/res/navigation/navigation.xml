@@ -4,59 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/mainMenuFragment">
-
     <fragment
         android:id="@+id/mainMenuFragment"
-        android:name="com.example.gestionnairerapportdechantier.mainMenu.MainMenuFragment"
+        android:name="com.example.applicationcrpytage.mainMenu.MainMenuFragment"
         android:label="fragment_main_menu"
         tools:layout="@layout/fragment_main_menu" >
         <action
-            android:id="@+id/action_mainMenuFragment_to_listePersonnelFragment"
-            app:destination="@id/listePersonnelFragment"
-            app:enterAnim="@anim/nav_default_enter_anim" />
+            android:id="@+id/action_mainMenuFragment_to_methodeCryptageB1Fragment"
+            app:destination="@id/methodeCryptageB1Fragment" />
         <action
-            android:id="@+id/action_mainMenuFragment_to_listeChantiersFragment"
-            app:destination="@id/listeChantiersFragment" />
+            android:id="@+id/action_mainMenuFragment_to_methodeCryptageAFragment"
+            app:destination="@id/methodeCryptageAFragment" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_methodeCryptageB2Fragment"
+            app:destination="@id/methodeCryptageB2Fragment" />
     </fragment>
     <fragment
-        android:id="@+id/listePersonnelFragment"
-        android:name="com.example.gestionnairerapportdechantier.personnel.listePersonnel.ListePersonnelFragment"
-        android:label="ListePersonnelFragment" >
-        <action
-            android:id="@+id/action_listePersonnelFragment_to_gestionPersonnelFragment"
-            app:destination="@id/gestionPersonnelFragment"
-            app:enterAnim="@anim/nav_default_enter_anim" />
-    </fragment>
+        android:id="@+id/methodeCryptageAFragment"
+        android:name="com.example.applicationcrpytage.methodeCryptageA.MethodeCryptageAFragment"
+        android:label="fragment_methode_cryptage"
+        tools:layout="@layout/fragment_methode_cryptage_a" />
     <fragment
-        android:id="@+id/gestionPersonnelFragment"
-        android:name="com.example.gestionnairerapportdechantier.personnel.gestionPersonnel.GestionPersonnelFragment"
-        android:label="GestionPersonnelFragment" >
-        <argument
-            android:name="idPersonnel"
-            app:argType="long"
-            android:defaultValue="-1L" />
-        <action
-            android:id="@+id/action_gestionPersonnelFragment_to_listePersonnelFragment"
-            app:destination="@id/listePersonnelFragment"
-            app:enterAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@+id/mainMenuFragment" />
-    </fragment>
+        android:id="@+id/methodeCryptageB1Fragment"
+        android:name="com.example.applicationcrpytage.methodeCryptageB1.MethodeCryptageB1Fragment"
+        android:label="fragment_methode_cryptage_b1"
+        tools:layout="@layout/fragment_methode_cryptage_b1"/>
     <fragment
-        android:id="@+id/listeChantiersFragment"
-        android:name="com.example.gestionnairerapportdechantier.chantiers.listeChantiers.ListeChantiersFragment"
-        android:label="fragment_liste_chantiers"
-        tools:layout="@layout/fragment_liste_chantiers" >
-        <action
-            android:id="@+id/action_listeChantiersFragment_to_gestionChantierFragment"
-            app:destination="@id/gestionChantierFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/gestionChantierFragment"
-        android:name="com.example.gestionnairerapportdechantier.chantiers.gestionChantiers.GestionChantierFragment"
-        android:label="fragment_gestion_chantier"
-        tools:layout="@layout/fragment_gestion_chantier" >
-        <action
-            android:id="@+id/action_gestionChantierFragment_to_listeChantiersFragment"
-            app:destination="@id/listeChantiersFragment" />
-    </fragment>
+        android:id="@+id/methodeCryptageB2Fragment"
+        android:name="com.example.applicationcrpytage.methodeCryptageB2.MethodeCryptageB2Fragment"
+        android:label="fragment_methode_cryptage_b2"
+        tools:layout="@layout/fragment_methode_cryptage_b2" />
 </navigation>

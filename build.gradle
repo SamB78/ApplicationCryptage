@@ -39,3 +39,4 @@ ext {
     navigationVersion = '1.0.0-rc02'
     coroutine_version = '1.0.0'
 }
+

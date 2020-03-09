@@ -58,6 +58,7 @@ fun matriceCut(matrice: Array<IntArray>, i: Int): Array<IntArray> {
         }
     }
     matriceResultat = arrayOf(intArrayOf(0, 0), intArrayOf(0, 0))
+
     return matriceResultat
 }
 

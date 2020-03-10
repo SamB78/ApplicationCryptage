@@ -29,7 +29,8 @@
             app:layout_constraintEnd_toEndOf="@+id/textView2"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/buttonToEncryptData" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonToEncryptData"
+            android:text="@{viewModel.resultDecryptage}"/>
 
         <Button
             android:id="@+id/buttonToDecryptData"
@@ -41,6 +42,7 @@
             app:layout_constraintHorizontal_bias="0.489"
             app:layout_constraintStart_toStartOf="@+id/dataToEncrypt"
             app:layout_constraintTop_toBottomOf="@+id/dataToEncrypt"
+            android:onClick="@{()-> viewModel.onClickButtonDecryptage()}"
             />
 
         <EditText
@@ -54,7 +56,8 @@
             app:layout_constraintEnd_toEndOf="@+id/textView2"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            android:text="@={viewModel._textToDecrypt}"/>
 
         <TextView
             android:id="@+id/textView5"
@@ -89,7 +92,7 @@
             app:layout_constraintEnd_toEndOf="@+id/textView2"
             app:layout_constraintStart_toStartOf="@+id/textView2"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
-            android:text="@={viewModel.textToEncrypt}"
+            android:text="@={viewModel._textToEncrypt}"
             />
 
         <Button

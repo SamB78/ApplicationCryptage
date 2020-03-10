@@ -62,13 +62,34 @@ fun matriceCut(matrice: Array<IntArray>, i: Int): Array<IntArray> {
     return matriceResultat
 }
 
-fun checkSizeText(text: String, sizeMatrice: Int): String{
+fun checkSizeText(text: String, sizeMatrice: Int): String {
     var textResult = text
 
-    while(textResult.length % sizeMatrice !=0){
-        textResult +="\u0000"
+    while (textResult.length % sizeMatrice != 0) {
+        textResult += "\u0000"
+        Timber.i("Ajout caractère null, taille textResult = ${textResult.length}")
     }
     return textResult
+}
+
+fun inversionMatrice(matrice: Array<IntArray>): Array<IntArray> {
+    var matriceResult: Array<IntArray>
+
+    if (matrice.size == 2) {
+        matriceResult = arrayOf(intArrayOf(0, 0), intArrayOf(0, 0))
+        matriceResult[0][0] = matrice[1][1]
+        matriceResult[0][1] = -(matrice[0][1])
+        matriceResult[1][0] = -(matrice[1][0])
+        matriceResult[1][1] = matrice[0][0]
+
+    } else if (matrice.size == 3) {
+        TODO("Faire matrice inversée 3*3")
+    } else {
+        matriceResult = arrayOf(intArrayOf(0), intArrayOf(0))
+    }
+
+
+    return matriceResult
 }
 
 //fun Comatrice(matriceCryptage: Array<IntArray>): Array<IntArray> {
@@ -80,7 +101,6 @@ fun checkSizeText(text: String, sizeMatrice: Int): String{
 //        comatrice[k] = [0] * matriceCryptage.size
 //        val l = 0
 //        while (l < matriceCryptage.size) {
-//            TODO("A FAIRE")
 //        }
 //    }
 //}
@@ -96,4 +116,28 @@ fun checkSizeText(text: String, sizeMatrice: Int): String{
 //
 //    return null
 //}
+
+fun calculAlpha(determinant: Int, nbCaracteresMax: Int): Int {
+
+    var alpha = 1
+    Timber.e("alpha determinant: $determinant, nbCaracteresMax = $nbCaracteresMax")
+
+    while ((determinant * alpha) % nbCaracteresMax != 1) {
+        alpha++
+    }
+
+
+//    if (nbCaracteresMax % 2 == 0) {
+//        Timber.i("alpha nbCaracteresMax % 2 == ${nbCaracteresMax % 2} ")
+//        while ((determinant * alpha) % nbCaracteresMax != 1 && alpha % 2 != 0) {
+//            alpha++
+//        }
+//    } else {
+//        while ((determinant * alpha) % nbCaracteresMax != 1 || alpha % 2 == 0) {
+//            alpha++
+//        }
+//    }
+
+    return alpha
+}
 

@@ -1,10 +1,13 @@
 package com.example.applicationcrpytage.methodeCryptageB2
 
+import android.opengl.Matrix
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.applicationcrpytage.Utils.calculAlpha
 import com.example.applicationcrpytage.Utils.calculDeterminant
 import com.example.applicationcrpytage.Utils.checkSizeText
+import com.example.applicationcrpytage.Utils.inversionMatrice
 import timber.log.Timber
 
 class MethodeCryptageB2ViewModel : ViewModel() {
@@ -13,7 +16,7 @@ class MethodeCryptageB2ViewModel : ViewModel() {
     val listeCaracteres = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\u0000"
 
 
-    val textToEncrypt = MutableLiveData<String>()
+    val _textToEncrypt = MutableLiveData<String>()
 
 
     val _resultEncryption = MutableLiveData<String>()
@@ -21,7 +24,7 @@ class MethodeCryptageB2ViewModel : ViewModel() {
         get() = this._resultEncryption
 
 
-    val textToDecrypt = MutableLiveData<String>()
+    val _textToDecrypt = MutableLiveData<String>()
 
     val _resultDecryptage = MutableLiveData<String>()
     val resultDecryptage: LiveData<String>
@@ -36,63 +39,50 @@ class MethodeCryptageB2ViewModel : ViewModel() {
 
     fun onClickButtonCryptage() {
         var stringResult = ""
+        var matriceA: Array<IntArray>
+        var matriceU: Array<IntArray>
 
         if (calculDeterminant(matriceCryptage) > 0) {
-            var matriceA: Array<IntArray>
+
             Timber.i("La clé est compatible!")
+            Timber.i("listeCaracteres.length = ${listeCaracteres.length}")
 
-            textToEncrypt.value = checkSizeText(textToEncrypt.value!!, matriceCryptage.size)
+            _textToEncrypt.value = checkSizeText(_textToEncrypt.value!!, matriceCryptage.size)
 
-            for (i in textToEncrypt.value!!.indices step matriceCryptage.size) {
+            for (i in _textToEncrypt.value!!.indices step matriceCryptage.size) {
 
-                matriceA = returnTextToEncryptInMatrice(i,matriceCryptage.size )
-
+                matriceA = returnTextInMatrice(_textToEncrypt.value!!, i, matriceCryptage.size)
                 Timber.i("Nombre de lignes de A: ${matriceCryptage[0].size}")
 
-
-                val matriceU = arrayOf(intArrayOf(0), intArrayOf(0))
-
-                for (l in 0 until matriceCryptage.size) {
-                    for (j in 0 until  matriceA[0].size) {
-                        for (k in 0 until  matriceA.size) {
-                            Timber.i("k = $k ")
-                            matriceU[l][j] += matriceCryptage[l][k] * matriceA[k][j]
-
-                            Timber.i("C[$l][$j] = ${matriceU[l][j]}, matriceCryptage[$l][$k] =${matriceCryptage[l][k]},matriceA[$k][$j]= ${matriceA[k][j]}")
-                        }
-                    }
-                }
+                matriceU = returnMatriceEncrypted(matriceA, matriceCryptage)
                 Timber.i("C = ${matriceU[0][0]}${matriceU[1][0]}")
-                val val1 = matriceU[0][0]
-                val val2 = matriceU[1][0]
-                Timber.i("C = ${listeCaracteres[val1 % 53]}${listeCaracteres[val2 % 53]}")
-                stringResult += listeCaracteres[val1 % 53] + "" + listeCaracteres[val2 % 53]
+
+                stringResult += convertMatriceInChar(matriceU)
             }
             Timber.e("resultat cryptage = $stringResult")
-
             _resultEncryption.value = stringResult
         } else {
             Timber.e("La clé est incompatible!")
         }
     }
 
-    fun returnTextToEncryptInMatrice(i: Int, matriceCryptageSize: Int): Array<IntArray> {
+    fun returnTextInMatrice(text: String, i: Int, matriceCryptageSize: Int): Array<IntArray> {
         var matrice = arrayOf(intArrayOf(0), intArrayOf(0))
-        when(matriceCryptageSize) {
-            2-> {
+        when (matriceCryptageSize) {
+            2 -> {
                 var matrice = arrayOf(intArrayOf(0), intArrayOf(0))
-                val x = listeCaracteres.indexOf(textToEncrypt.value!![i])
-                val y = listeCaracteres.indexOf(textToEncrypt.value!![i + 1])
+                val x = listeCaracteres.indexOf(text[i])
+                val y = listeCaracteres.indexOf(text[i + 1])
                 matrice[0][0] = x
                 matrice[1][0] = y
                 Timber.i("matriceA[0][0] = ${matrice[0][0]},matriceA[1][0] = ${matrice[1][0]},  i = $i")
                 return matrice
             }
-            3->{
+            3 -> {
                 var matrice = arrayOf(intArrayOf(0), intArrayOf(0), intArrayOf(0))
-                val x = listeCaracteres.indexOf(textToEncrypt.value!![i])
-                val y = listeCaracteres.indexOf(textToEncrypt.value!![i + 1])
-                val z = listeCaracteres.indexOf(textToEncrypt.value!![i + 2])
+                val x = listeCaracteres.indexOf(text[i])
+                val y = listeCaracteres.indexOf(text[i + 1])
+                val z = listeCaracteres.indexOf(text[i + 2])
                 matrice[0][0] = x
                 matrice[1][0] = y
                 matrice[2][0] = z
@@ -105,9 +95,83 @@ class MethodeCryptageB2ViewModel : ViewModel() {
         return matrice
     }
 
+    fun returnMatriceEncrypted(
+        matriceA: Array<IntArray>,
+        matriceCryptage: Array<IntArray>
+    ): Array<IntArray> {
+        var matriceU: Array<IntArray> = arrayOf(intArrayOf(0), intArrayOf(0))
+        if (matriceCryptage.size == 3) {
+            matriceU = arrayOf(intArrayOf(0), intArrayOf(0), intArrayOf(0))
+        }
+        for (l in 0 until matriceCryptage.size) {
+            for (j in 0 until matriceA[0].size) {
+                for (k in 0 until matriceA.size) {
+                    Timber.i("k = $k ")
+                    matriceU[l][j] += matriceCryptage[l][k] * matriceA[k][j]
+
+                    Timber.i("C[$l][$j] = ${matriceU[l][j]}, matriceCryptage[$l][$k] =${matriceCryptage[l][k]},matriceA[$k][$j]= ${matriceA[k][j]}")
+                }
+            }
+        }
+        return matriceU
+    }
+
+    fun convertMatriceInChar(matriceU: Array<IntArray>): String {
+        var stringResult = ""
+        Timber.i("matriceU.size = ${matriceU.size}")
+        for (i in 0 until matriceU.size) {
+                stringResult += listeCaracteres[(matriceU[i][0]) % listeCaracteres.length]
+                Timber.i("stringResult = $stringResult")
+        }
+        return stringResult
+    }
+
 
     fun onClickButtonDecryptage() {
 
+        _textToDecrypt.value = checkSizeText(_textToDecrypt.value!!, matriceCryptage.size)
+
+        var matriceDecryptage = inversionMatrice(matriceCryptage)
+        var alpha = calculAlpha(calculDeterminant(matriceCryptage), listeCaracteres.length)
+        Timber.i("alpha =  $alpha")
+        var matriceX: Array<IntArray>
+        var matriceC: Array<IntArray>
+        var stringResult = ""
+
+
+        for (i in _textToDecrypt.value!!.indices step matriceDecryptage.size) {
+            matriceC = returnTextInMatrice(_textToDecrypt.value!!, i, matriceCryptage.size)
+            matriceX = returnMatriceDecrypted(matriceC, matriceDecryptage, alpha)
+
+            //stringResult += convertMatriceInChar(matriceX)
+        }
+
+        _resultDecryptage.value =   stringResult
+
+
+    }
+
+
+    fun returnMatriceDecrypted(
+        matriceC: Array<IntArray>,
+        matriceDecryptage: Array<IntArray>,
+        alpha: Int
+    ): Array<IntArray> {
+        var matriceX: Array<IntArray> = arrayOf(intArrayOf(0), intArrayOf(0))
+        if (matriceDecryptage.size == 3) {
+            matriceX = arrayOf(intArrayOf(0), intArrayOf(0), intArrayOf(0))
+        }
+        for (l in 0 until matriceDecryptage.size) {
+            for (j in 0 until matriceC[0].size) {
+                for (k in 0 until matriceC.size) {
+                    Timber.i("k = $k ")
+                    matriceX[l][j] += matriceDecryptage[l][k] * matriceC[k][j] * alpha
+
+                    Timber.i("C[$l][$j] = ${matriceX[l][j]}, matriceDecryptage[$l][$k] =${matriceDecryptage[l][k]},matriceC[$k][$j]= ${matriceC[k][j]}")
+                }
+            }
+        }
+        return matriceX
     }
 
 

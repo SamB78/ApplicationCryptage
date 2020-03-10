@@ -116,17 +116,6 @@ class MethodeCryptageB2ViewModel : ViewModel() {
         return matriceU
     }
 
-    fun convertMatriceInChar(matriceU: Array<IntArray>): String {
-        var stringResult = ""
-        Timber.i("matriceU.size = ${matriceU.size}")
-        for (i in 0 until matriceU.size) {
-                stringResult += listeCaracteres[(matriceU[i][0]) % listeCaracteres.length]
-                Timber.i("stringResult = $stringResult")
-        }
-        return stringResult
-    }
-
-
     fun onClickButtonDecryptage() {
 
         _textToDecrypt.value = checkSizeText(_textToDecrypt.value!!, matriceCryptage.size)
@@ -143,7 +132,12 @@ class MethodeCryptageB2ViewModel : ViewModel() {
             matriceC = returnTextInMatrice(_textToDecrypt.value!!, i, matriceCryptage.size)
             matriceX = returnMatriceDecrypted(matriceC, matriceDecryptage, alpha)
 
-            //stringResult += convertMatriceInChar(matriceX)
+
+
+            //stringResult += listeCaracteres[(matriceX[0][0]) % listeCaracteres.length]
+            //stringResult += listeCaracteres[(matriceX[1][0]) % listeCaracteres.length]
+            stringResult += convertMatriceInChar(matriceX)
+            Timber.i("stringResult = $stringResult")
         }
 
         _resultDecryptage.value =   stringResult
@@ -171,7 +165,20 @@ class MethodeCryptageB2ViewModel : ViewModel() {
                 }
             }
         }
+        Timber.i("sortie matriceDecryptage")
         return matriceX
+    }
+
+
+    fun convertMatriceInChar(matriceU: Array<IntArray>): String {
+        var stringResult = ""
+        Timber.i("matriceU.size = ${matriceU.size}")
+        for (i in 0 until matriceU.size) {
+            Timber.i(" valeur dans listeCaracteres = ${matriceU[i][0] % listeCaracteres.length}, matriceU = ${matriceU[i][0]}")
+            stringResult += listeCaracteres[matriceU[i][0] % listeCaracteres.length]
+            Timber.i("stringResult = $stringResult")
+        }
+        return stringResult
     }
 
 

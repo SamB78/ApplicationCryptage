@@ -11,35 +11,31 @@ import timber.log.Timber
 
 class MethodeCryptageB2ViewModel : ViewModel() {
 
-    val matriceCryptage = arrayOf(intArrayOf(4, 1), intArrayOf(3, 2))
-    val listeCaracteres = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\u0000"
+    private val matriceCrypt2 = arrayOf(intArrayOf(4, 1), intArrayOf(3, 2))
+    private val matriceCrypt3 = arrayOf(intArrayOf(3, 2,1), intArrayOf(2, 4,3), intArrayOf(3, 1,3))
+    private val listeCaracteres = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\u0000"
 
 
     val _textToEncrypt = MutableLiveData<String>()
 
-
-    val _resultEncryption = MutableLiveData<String>()
+    private val _resultEncryption = MutableLiveData<String>()
     val resultEncryption: LiveData<String>
         get() = this._resultEncryption
 
-
     val _textToDecrypt = MutableLiveData<String>()
 
-    val _resultDecryptage = MutableLiveData<String>()
+    private val _resultDecryptage = MutableLiveData<String>()
     val resultDecryptage: LiveData<String>
         get() = this._resultDecryptage
 
     init {
-
-        //ESSAIS
-        Timber.e("listeCaracteres[5] = ${listeCaracteres[5]}")
-        Timber.e("matriceCryptage[2][2] = ${matriceCryptage[0][1]}")
     }
 
     fun onClickButtonCryptage() {
         var stringResult = ""
         var matriceA: Array<IntArray>
         var matriceU: Array<IntArray>
+        var matriceCryptage = matriceCrypt3
 
         if (calculDeterminant(matriceCryptage) > 0) {
 
@@ -51,7 +47,6 @@ class MethodeCryptageB2ViewModel : ViewModel() {
             for (i in _textToEncrypt.value!!.indices step matriceCryptage.size) {
 
                 matriceA = returnTextInMatrice(_textToEncrypt.value!!, i, matriceCryptage.size)
-                Timber.i("Nombre de lignes de A: ${matriceCryptage[0].size}")
 
                 matriceU = returnMatriceEncrypted(matriceA, matriceCryptage)
                 Timber.i("C = ${matriceU[0][0]}${matriceU[1][0]}")
@@ -117,24 +112,23 @@ class MethodeCryptageB2ViewModel : ViewModel() {
 
     fun onClickButtonDecryptage() {
 
+        var matriceCryptage = matriceCrypt3
+
         _textToDecrypt.value = checkSizeText(_textToDecrypt.value!!, matriceCryptage.size)
+
         var alpha = calculAlpha(calculDeterminant(matriceCryptage), listeCaracteres.length)
         var inversionMatriceCryptage = inversionMatrice(matriceCryptage)
-        var matriceDecryptage = calculMatriceCryptage(inversionMatriceCryptage, alpha)
+        var matriceDecryptage = calculMatriceCryptage(inversionMatriceCryptage, alpha, matriceCryptage)
 
-        Timber.i("alpha =  $alpha")
         var matriceX: Array<IntArray>
         var matriceC: Array<IntArray>
         var stringResult = ""
 
+        Timber.i("alpha =  $alpha")
 
         for (i in _textToDecrypt.value!!.indices step matriceDecryptage.size) {
             matriceC = returnTextInMatrice(_textToDecrypt.value!!, i, matriceCryptage.size)
             matriceX = returnMatriceDecrypted(matriceC, matriceDecryptage, alpha)
-
-
-            //stringResult += listeCaracteres[(matriceX[0][0]) % listeCaracteres.length]
-            //stringResult += listeCaracteres[(matriceX[1][0]) % listeCaracteres.length]
             stringResult += convertMatriceInChar(matriceX)
             Timber.i("stringResult = $stringResult")
         }
@@ -146,19 +140,28 @@ class MethodeCryptageB2ViewModel : ViewModel() {
 
     private fun calculMatriceCryptage(
         inversionMatriceCryptage: Array<IntArray>,
-        alpha: Int
+        alpha: Int, matriceCryptage: Array<IntArray>
     ): Array<IntArray> {
+        var matriceDecryptage = arrayOf(intArrayOf(0,0), intArrayOf(0,0))
 
-        var matriceDecryptage = arrayOf(intArrayOf(0), intArrayOf(0))
-        if (matriceCryptage.size == 2) {
 
-            for (i in 0 until inversionMatriceCryptage.size) {
-                for (j in 0 until inversionMatriceCryptage[0].size)
+        if (matriceCryptage.size == 3) {
+            matriceDecryptage = arrayOf(intArrayOf(0,0,0), intArrayOf(0,0,0), intArrayOf(0,0,0))
+        }
+            for (i in inversionMatriceCryptage.indices) {
+                for (j in inversionMatriceCryptage[0].indices) {
+
+
                     matriceDecryptage[i][j] =
                         (inversionMatriceCryptage[i][j] * alpha) % listeCaracteres.length
+
+                    while (matriceDecryptage[i][j] < 0) {
+                        matriceDecryptage[i][j] += listeCaracteres.length
+                    }
+                }
             }
 
-        }
+
         return matriceDecryptage
     }
 
@@ -169,14 +172,16 @@ class MethodeCryptageB2ViewModel : ViewModel() {
         alpha: Int
     ): Array<IntArray> {
         var matriceX: Array<IntArray> = arrayOf(intArrayOf(0), intArrayOf(0))
+        Timber.i("Passage matriceDecryptage = ${matriceDecryptage.size}")
+
         if (matriceDecryptage.size == 3) {
-            matriceX = arrayOf(intArrayOf(0), intArrayOf(0), intArrayOf(0))
+            matriceX = arrayOf(intArrayOf(0,0,0), intArrayOf(0,0,0), intArrayOf(0,0,0))
         }
-        for (l in 0 until matriceDecryptage.size) {
-            for (j in 0 until matriceC[0].size) {
-                for (k in 0 until matriceC.size) {
+        for (l in matriceDecryptage.indices) {
+            for (j in matriceC[0].indices) {
+                for (k in matriceC.indices) {
                     Timber.i("k = $k ")
-                    matriceX[l][j] += matriceDecryptage[l][k]  * matriceC[k][j]
+                    matriceX[l][j] += matriceDecryptage[l][k] * matriceC[k][j]
 
                     Timber.i("matriceX[$l][$j] = ${matriceX[l][j]}, matriceDecryptage[$l][$k] =${matriceDecryptage[l][k]},matriceC[$k][$j]= ${matriceC[k][j]}")
                 }

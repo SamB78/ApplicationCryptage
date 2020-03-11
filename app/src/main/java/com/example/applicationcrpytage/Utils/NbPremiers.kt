@@ -3,32 +3,34 @@ package com.example.applicationcrpytage.Utils
 import timber.log.Timber
 
 fun calculDeterminant(matrice: Array<IntArray>): Int {
-    if (matrice.count() == 1) {
-        Timber.i("Valeur de matriceCryptage[0][0] = ${matrice[0][0]}")
-        return matrice[0][0]
-    } else if (matrice.count() == 2) {
-        val result = matrice[0][0] * matrice[1][1] - matrice[0][1] * matrice[1][0]
-        Timber.i("Valeur de matriceCryptage = $result")
-        return result
-    } else if (matrice.count() == 3) {
-        val result: Int
-        result = (matrice[0][0] * calculDeterminant(
-            matriceCut(
-                matrice,
-                0
-            )
-        )) - (matrice[0][1] * calculDeterminant(
-            matriceCut(
-                matrice,
-                1
-            )
-        )) + (matrice[0][2] * calculDeterminant(matriceCut(matrice, 2)))
+    when {
+        matrice.count() == 1 -> {
+            Timber.i("Valeur de matriceCryptage[0][0] = ${matrice[0][0]}")
+            return matrice[0][0]
+        }
+        matrice.count() == 2 -> {
+            val result = matrice[0][0] * matrice[1][1] - matrice[0][1] * matrice[1][0]
+            Timber.i("Valeur de matriceCryptage = $result")
+            return result
+        }
+        matrice.count() == 3 -> {
+            val result: Int = (matrice[0][0] * calculDeterminant(
+                matriceCut(
+                    matrice,
+                    0
+                )
+            )) - (matrice[0][1] * calculDeterminant(
+                matriceCut(
+                    matrice,
+                    1
+                )
+            )) + (matrice[0][2] * calculDeterminant(matriceCut(matrice, 2)))
 
-        Timber.i(" result determinant = $result")
-        return result
+            Timber.i(" result determinant = $result")
+            return result
+        }
+        else -> return 0
     }
-    return 0
-    //A FAIRE
 }
 
 
@@ -82,7 +84,7 @@ fun transposeeComatrice(matrice: Array<IntArray>, i: Int, j: Int): Int {
         return matriceResultat
 
     } else if (i == 1 && j == 0) { //d OK
-        matriceResultat = (matrice[1][2] * matrice[2][1]) - (matrice[1][0] * matrice[2][2])
+        matriceResultat = (matrice[1][2] * matrice[2][0]) - (matrice[1][0] * matrice[2][2])
         return matriceResultat
 
     } else if (i == 1 && j == 1) { //e OK
@@ -105,9 +107,9 @@ fun transposeeComatrice(matrice: Array<IntArray>, i: Int, j: Int): Int {
         matriceResultat = (matrice[0][0] * matrice[1][1]) - (matrice[0][1] * matrice[1][0])
         return matriceResultat
 
+    }else {
+        return 0
     }
-
-    return 0
 }
 
 

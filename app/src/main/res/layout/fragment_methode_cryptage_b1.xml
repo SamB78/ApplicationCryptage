@@ -1,14 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".methodeCryptageB1.MethodeCryptageB1Fragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.applicationcrpytage.methodeCryptageB1.MethodeCryptageB1ViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context=".methodeCryptageB2.MethodeCryptageB2Fragment">
 
-</FrameLayout>
+
+        <EditText
+            android:id="@+id/cleDecryption"
+            android:layout_width="43dp"
+            android:layout_height="46dp"
+            android:ems="10"
+            android:hint="clé"
+            android:inputType="numberSigned"
+            app:layout_constraintEnd_toEndOf="@+id/textView5"
+            app:layout_constraintTop_toTopOf="@+id/dataToDecrypt"
+            android:text="@={viewModel._keyforDecryption}"/>
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="43dp"
+            android:layout_height="46dp"
+            android:ems="10"
+            android:hint="clé"
+            android:inputType="numberSigned"
+            app:layout_constraintBottom_toTopOf="@+id/buttonToEncryptData"
+            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <EditText
+            android:id="@+id/decryptedDataResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="248dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Your decrypted Data"
+            android:inputType="textMultiLine"
+            android:text="@{viewModel.resultDecryptage}"
+            app:layout_constraintEnd_toEndOf="@+id/textView5"
+            app:layout_constraintStart_toStartOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/buttonToEncryptData" />
+
+        <Button
+            android:id="@+id/buttonToDecryptData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="248dp"
+            android:onClick="@{()-> viewModel.onClickButtonDecryptage()}"
+            android:text="Decrypt your Data"
+            app:layout_constraintEnd_toEndOf="@+id/textView5"
+            app:layout_constraintStart_toStartOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/dataToEncrypt" />
+
+        <EditText
+            android:id="@+id/dataToDecrypt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="248dp"
+            android:ems="10"
+            android:hint="Enter yout text here"
+            android:inputType="textPersonName"
+            android:text="@={viewModel._textToDecrypt}"
+            app:layout_constraintStart_toStartOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="216dp"
+            android:text="décryptage de données B1"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:text="Cryptage de données B1"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/dataToEncrypt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter yout text here"
+            android:inputType="textPersonName"
+            android:text="@={viewModel._textToEncrypt}"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <Button
+            android:id="@+id/buttonToEncryptData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()-> viewModel.onClickButtonCryptage()}"
+            android:text="Encrypt your Data"
+            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintStart_toStartOf="@+id/dataToEncrypt"
+            app:layout_constraintTop_toBottomOf="@+id/dataToEncrypt" />
+
+        <EditText
+            android:id="@+id/EncryptedDataResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Your encrypted Data"
+            android:inputType="textMultiLine"
+            android:text="@{viewModel.resultEncryption}"
+            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/buttonToEncryptData" />
+
+        <EditText
+            android:id="@+id/cleEncryption"
+            android:layout_width="43dp"
+            android:layout_height="46dp"
+            android:ems="10"
+            android:hint="clé"
+            android:inputType="numberSigned"
+            app:layout_constraintBottom_toTopOf="@+id/buttonToEncryptData"
+            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            android:text="@={viewModel._keyforEncryption}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

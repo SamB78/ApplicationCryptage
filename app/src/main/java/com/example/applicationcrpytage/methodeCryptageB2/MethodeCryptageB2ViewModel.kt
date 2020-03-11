@@ -1,6 +1,5 @@
 package com.example.applicationcrpytage.methodeCryptageB2
 
-import android.opengl.Matrix
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -119,9 +118,10 @@ class MethodeCryptageB2ViewModel : ViewModel() {
     fun onClickButtonDecryptage() {
 
         _textToDecrypt.value = checkSizeText(_textToDecrypt.value!!, matriceCryptage.size)
-
-        var matriceDecryptage = inversionMatrice(matriceCryptage)
         var alpha = calculAlpha(calculDeterminant(matriceCryptage), listeCaracteres.length)
+        var inversionMatriceCryptage = inversionMatrice(matriceCryptage)
+        var matriceDecryptage = calculMatriceCryptage(inversionMatriceCryptage, alpha)
+
         Timber.i("alpha =  $alpha")
         var matriceX: Array<IntArray>
         var matriceC: Array<IntArray>
@@ -133,16 +133,33 @@ class MethodeCryptageB2ViewModel : ViewModel() {
             matriceX = returnMatriceDecrypted(matriceC, matriceDecryptage, alpha)
 
 
-
             //stringResult += listeCaracteres[(matriceX[0][0]) % listeCaracteres.length]
             //stringResult += listeCaracteres[(matriceX[1][0]) % listeCaracteres.length]
             stringResult += convertMatriceInChar(matriceX)
             Timber.i("stringResult = $stringResult")
         }
 
-        _resultDecryptage.value =   stringResult
+        _resultDecryptage.value = stringResult
 
 
+    }
+
+    private fun calculMatriceCryptage(
+        inversionMatriceCryptage: Array<IntArray>,
+        alpha: Int
+    ): Array<IntArray> {
+
+        var matriceDecryptage = arrayOf(intArrayOf(0), intArrayOf(0))
+        if (matriceCryptage.size == 2) {
+
+            for (i in 0 until inversionMatriceCryptage.size) {
+                for (j in 0 until inversionMatriceCryptage[0].size)
+                    matriceDecryptage[i][j] =
+                        (inversionMatriceCryptage[i][j] * alpha) % listeCaracteres.length
+            }
+
+        }
+        return matriceDecryptage
     }
 
 
@@ -159,9 +176,9 @@ class MethodeCryptageB2ViewModel : ViewModel() {
             for (j in 0 until matriceC[0].size) {
                 for (k in 0 until matriceC.size) {
                     Timber.i("k = $k ")
-                    matriceX[l][j] += matriceDecryptage[l][k] * matriceC[k][j] * alpha
+                    matriceX[l][j] += matriceDecryptage[l][k]  * matriceC[k][j]
 
-                    Timber.i("C[$l][$j] = ${matriceX[l][j]}, matriceDecryptage[$l][$k] =${matriceDecryptage[l][k]},matriceC[$k][$j]= ${matriceC[k][j]}")
+                    Timber.i("matriceX[$l][$j] = ${matriceX[l][j]}, matriceDecryptage[$l][$k] =${matriceDecryptage[l][k]},matriceC[$k][$j]= ${matriceC[k][j]}")
                 }
             }
         }

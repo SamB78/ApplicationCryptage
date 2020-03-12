@@ -2,6 +2,18 @@ package com.example.applicationcrpytage.Utils
 
 import timber.log.Timber
 
+
+fun PGCD(a: Int, b: Int): Int {
+    return if (a == b) {
+        a
+    } else {
+        if (a > b)
+            PGCD(a - b, b)
+        else
+            PGCD(a, b - a)
+    }
+}
+
 fun calculDeterminant(matrice: Array<IntArray>): Int {
     when {
         matrice.count() == 1 -> {

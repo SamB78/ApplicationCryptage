@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_mainMenuFragment_to_methodeCryptageB2Fragment"
             app:destination="@id/methodeCryptageB2Fragment" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_methodeCryptageCFragment"
+            app:destination="@id/methodeCryptageCFragment" />
     </fragment>
     <fragment
         android:id="@+id/methodeCryptageAFragment"
@@ -34,4 +37,9 @@
         android:name="com.example.applicationcrpytage.methodeCryptageB2.MethodeCryptageB2Fragment"
         android:label="fragment_methode_cryptage_b2"
         tools:layout="@layout/fragment_methode_cryptage_b2" />
+    <fragment
+        android:id="@+id/methodeCryptageCFragment"
+        android:name="com.example.applicationcrpytage.methodeCryptageC.MethodeCryptageCFragment"
+        android:label="fragment_methode_cryptage_c"
+        tools:layout="@layout/fragment_methode_cryptage_c" />
 </navigation>

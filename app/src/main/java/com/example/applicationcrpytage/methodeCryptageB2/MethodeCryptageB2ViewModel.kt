@@ -202,6 +202,4 @@ class MethodeCryptageB2ViewModel : ViewModel() {
         }
         return stringResult
     }
-
-
 }

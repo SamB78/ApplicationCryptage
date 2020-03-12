@@ -10,7 +10,8 @@ class MainMenuViewModel: ViewModel() {
         EN_ATTENTE,
         PASSAGE_PAGE_A,
         PASSAGE_PAGE_B1,
-        PASSAGE_PAGE_B2
+        PASSAGE_PAGE_B2,
+        PASSAGE_PAGE_C
     }
 
     private var _navigation = MutableLiveData<navigationMainMenu>()
@@ -31,6 +32,10 @@ class MainMenuViewModel: ViewModel() {
     fun onClickBoutonB2(){
         _navigation.value = navigationMainMenu.PASSAGE_PAGE_B2
     }
+    fun onClickBoutonC(){
+        _navigation.value = navigationMainMenu.PASSAGE_PAGE_C
+    }
+
 
     fun onBoutonClicked(){
         _navigation.value = navigationMainMenu.EN_ATTENTE

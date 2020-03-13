@@ -7,8 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.applicationcrpytage.methodeCryptageB2.MethodeCryptageB2ViewModel" />
-
+            type="com.example.applicationcrpytage.methodeCryptageC.MethodeCryptageCViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="216dp"
-            android:text="décryptage de données"
+            android:text="décryptage de données C"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="@+id/textView2"
             app:layout_constraintHorizontal_bias="0.496"
@@ -76,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
-            android:text="Cryptage de données B2"
+            android:text="Cryptage de données C"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

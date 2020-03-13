@@ -1,4 +1,4 @@
-package com.example.applicationcrpytage.methodeCryptageA
+package com.example.applicationcrpytage.methodeCryptageC
 
 
 import android.os.Bundle
@@ -10,25 +10,23 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.applicationcrpytage.R
-import com.example.applicationcrpytage.databinding.FragmentMethodeCryptageABinding
-import com.example.applicationcrpytage.databinding.FragmentMethodeCryptageB2Binding
-import com.example.applicationcrpytage.methodeCryptageB2.MethodeCryptageB2ViewModel
+import com.example.applicationcrpytage.databinding.FragmentMethodeCryptageCBinding
 
 /**
  * A simple [Fragment] subclass.
  */
-class MethodeCryptageAFragment : Fragment() {
+class MethodeCryptageCFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentMethodeCryptageABinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_methode_cryptage_a, container, false)
+        val binding: FragmentMethodeCryptageCBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_methode_cryptage_c, container, false)
         binding.executePendingBindings()
         binding.lifecycleOwner = this
 
-        val viewModel = ViewModelProvider(this).get(MethodeCryptageAViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(MethodeCryptageCViewModel::class.java)
         binding.viewModel = viewModel
 
         val navController = findNavController()

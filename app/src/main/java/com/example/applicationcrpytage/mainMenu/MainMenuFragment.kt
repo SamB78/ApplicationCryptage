@@ -51,6 +51,11 @@ class MainMenuFragment : Fragment() {
                     navController.navigate(R.id.action_mainMenuFragment_to_methodeCryptageB2Fragment)
                     viewModel.onBoutonClicked()
                 }
+                MainMenuViewModel.navigationMainMenu.PASSAGE_PAGE_C->{
+                    Toast.makeText(context, "C", Toast.LENGTH_SHORT).show()
+                    navController.navigate(R.id.action_mainMenuFragment_to_methodeCryptageCFragment)
+                    viewModel.onBoutonClicked()
+                }
             }
 
         })

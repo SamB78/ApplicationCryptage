@@ -21,11 +21,14 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
             android:text="Choisissez votre méthode de crpytage"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/buttonMethodeA"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,9 +39,8 @@
             android:onClick="@{()-> viewModel.onClickBoutonA()}"
             android:text="Méthode A"
             app:layout_constraintBottom_toTopOf="@+id/buttonMethodeB1"
-            app:layout_constraintEnd_toEndOf="@+id/textView"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <Button
@@ -49,7 +51,6 @@
             android:text="Méthode B1"
             app:layout_constraintBottom_toTopOf="@+id/buttonMethodeB2"
             app:layout_constraintEnd_toEndOf="@+id/buttonMethodeA"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/buttonMethodeA"
             app:layout_constraintTop_toBottomOf="@+id/buttonMethodeA" />
 
@@ -59,10 +60,20 @@
             android:layout_height="wrap_content"
             android:onClick="@{()-> viewModel.onClickBoutonB2()}"
             android:text="Méthode B2"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/buttonC"
             app:layout_constraintEnd_toEndOf="@+id/buttonMethodeB1"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/buttonMethodeB1"
             app:layout_constraintTop_toBottomOf="@+id/buttonMethodeB1" />
+
+        <Button
+            android:id="@+id/buttonC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="methode C"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/buttonMethodeB2"
+            app:layout_constraintStart_toStartOf="@+id/buttonMethodeB2"
+            app:layout_constraintTop_toBottomOf="@+id/buttonMethodeB2"
+            android:onClick="@{()-> viewModel.onClickBoutonC()}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
